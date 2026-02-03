@@ -671,3 +671,308 @@ button:hover {
     box-shadow: 0 0 0 0 rgba(214, 48, 49, 0);
   }
 }
+
+/* Operator Message Styles */
+.operator-message {
+  margin-top: 15px;
+  padding: 12px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.limited-access-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.upgrade-hint {
+  font-size: 0.75rem;
+  color: #777;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 1024px) {
+  .dashboard-container {
+    padding: 15px;
+  }
+
+  .machine-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    min-width: unset;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* Navigation */
+  .main-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 15px 0;
+  }
+
+  .main-nav h1 {
+    font-size: 1.3rem;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  /* Dashboard Layout */
+  .dashboard-content {
+    flex-direction: column;
+  }
+
+  .control-panel {
+    min-width: unset;
+    order: 2;
+    /* Move control panel below machine grid on mobile */
+  }
+
+  .machine-grid {
+    order: 1;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+  }
+
+  /* Machine Cards - Simplified for Mobile */
+  .machine-card {
+    padding: 15px;
+  }
+
+  .machine-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .health-ring {
+    width: 42px;
+    height: 42px;
+  }
+
+  .health-ring-inner {
+    width: 34px;
+    height: 34px;
+    font-size: 0.65rem;
+  }
+
+  .data-row {
+    font-size: 0.85rem;
+  }
+
+  /* Machine Detail Page */
+  .detail-health-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .large-health-ring {
+    width: 80px;
+    height: 80px;
+  }
+
+  .large-health-ring-inner {
+    width: 65px;
+    height: 65px;
+    font-size: 1.2rem;
+  }
+
+  /* Charts */
+  .charts-grid {
+    gap: 20px;
+  }
+
+  .chart-card {
+    padding: 15px;
+  }
+
+  /* Alerts Page */
+  .alerts-header {
+    padding: 20px;
+  }
+
+  .header-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .alert-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .alert-time-cell,
+  .alert-machine-cell {
+    min-width: unset;
+  }
+
+  /* Hide heavy charts on mobile, show summary only */
+  .chart-card .recharts-wrapper {
+    max-height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  /* Ultra-compact mode for small phones */
+  .dashboard-container {
+    padding: 10px;
+  }
+
+  .main-nav h1 {
+    font-size: 1.1rem;
+  }
+
+  .machine-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .machine-card {
+    padding: 12px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .title-section {
+    width: 100%;
+    align-items: center;
+  }
+
+  .health-ring-container {
+    width: 100%;
+  }
+
+  .data-row {
+    font-size: 0.8rem;
+    padding-bottom: 6px;
+    margin: 6px 0;
+  }
+
+  .status-badge {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+
+  /* Simplify insights for very small screens */
+  .ai-insights {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+
+  .insight-header {
+    font-size: 0.65rem;
+  }
+
+  .task-chip {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+  }
+
+  .alert-item {
+    font-size: 0.75rem;
+  }
+
+  /* Control Panel */
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  select,
+  input {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  /* Charts - Hide on very small screens, show data table only */
+  .chart-card .recharts-wrapper {
+    display: none;
+  }
+
+  .chart-card::after {
+    content: "📊 Chart hidden on small screens. View on larger device for full analytics.";
+    display: block;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    color: #777;
+    font-size: 0.85rem;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* Alerts */
+  .alerts-header {
+    padding: 15px;
+  }
+
+  .header-top h1 {
+    font-size: 1.4rem;
+  }
+
+  .alert-row {
+    padding: 12px 15px;
+  }
+
+  .alert-desc-cell {
+    font-size: 0.85rem;
+  }
+}
+
+/* Landscape Mobile Optimization */
+@media (max-width: 900px) and (orientation: landscape) {
+  .machine-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .dashboard-content {
+    gap: 20px;
+  }
+}
+
+/* Print Styles (Bonus - for reports) */
+@media print {
+
+  .control-panel,
+  .main-nav,
+  .back-btn {
+    display: none;
+  }
+
+  .machine-card {
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+
+  .chart-card {
+    page-break-inside: avoid;
+  }
+}

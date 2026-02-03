@@ -1,0 +1,208 @@
+/* Role Indicator Container */
+.role-indicator-container {
+    position: relative;
+}
+
+.role-indicator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 15px;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.role-indicator:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+.role-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.role-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.username {
+    font-weight: 600;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+.employee-id-badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: #10b981;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
+}
+
+.role-name {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.dropdown-arrow {
+    font-size: 10px;
+    color: #7f8c8d;
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+
+.role-indicator:hover .dropdown-arrow {
+    transform: translateY(2px);
+}
+
+/* Dropdown Menu */
+.role-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    min-width: 280px;
+    z-index: 1000;
+    animation: slideDown 0.3s ease;
+    overflow: hidden;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.menu-header {
+    padding: 15px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 13px;
+    color: #2c3e50;
+}
+
+.menu-permissions {
+    padding: 12px;
+}
+
+.permission-item {
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.permission-item:hover {
+    background: #f8f9fa;
+}
+
+.check-icon {
+    color: #27ae60;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.menu-divider {
+    height: 1px;
+    background: #e9ecef;
+    margin: 8px 0;
+}
+
+.logout-button {
+    width: 100%;
+    padding: 14px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.3s ease;
+}
+
+.logout-button:hover {
+    background: #c0392b;
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .role-indicator {
+        padding: 6px 12px;
+    }
+
+    .role-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+
+    .username {
+        font-size: 13px;
+    }
+
+    .role-name {
+        font-size: 11px;
+    }
+
+    .role-menu {
+        min-width: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .role-info {
+        display: none;
+    }
+
+    .dropdown-arrow {
+        display: none;
+    }
+
+    .role-indicator {
+        padding: 6px;
+    }
+
+    .role-menu {
+        right: -10px;
+        min-width: 240px;
+    }
+}

@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-// Import MachineCard Component
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
+// Import Components
 import MachineCard from "./MachineCard";
 import MachineDetail from "./MachineDetail";
 import AlertsPage from "./AlertsPage";
+import Login from "./Login";
+import ProtectedRoute from "./ProtectedRoute";
+import RoleIndicator from "./RoleIndicator";
+// Import Authentication
+import { AuthProvider, useAuth } from "./AuthContext";
 import "./App.css";
 
 const INITIAL_MACHINES = [
@@ -278,25 +283,60 @@ function App() {
     </div>
   );
 
-  return (
-    <Router>
+  // Main App Content (After Login)
+  const MainApp = () => {
+    const { isAuthenticated, hasPermission } = useAuth();
+
+    if (!isAuthenticated) {
+      return <Navigate to="/login" replace />;
+    }
+
+    return (
       <div className="dashboard-container">
         <nav className="main-nav">
           <h1>🏭 <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>Smart Factory Monitoring</Link></h1>
           <div className="nav-links">
             <Link to="/" className="nav-link">Overview</Link>
-            <Link to="/alerts" className="nav-link alert-nav-link">
-              Alerts {alerts.length > 0 && <span className="alert-count">{alerts.length}</span>}
-            </Link>
+            {hasPermission('view_alerts') && (
+              <Link to="/alerts" className="nav-link alert-nav-link">
+                Alerts {alerts.length > 0 && <span className="alert-count">{alerts.length}</span>}
+              </Link>
+            )}
+            <RoleIndicator />
           </div>
         </nav>
 
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/machine/:id" element={<MachineDetail machines={machines} />} />
-          <Route path="/alerts" element={<AlertsPage alerts={alerts} />} />
+          <Route
+            path="/machine/:id"
+            element={
+              <ProtectedRoute requiredPermission="view_machine_details">
+                <MachineDetail machines={machines} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/alerts"
+            element={
+              <ProtectedRoute requiredPermission="view_alerts">
+                <AlertsPage alerts={alerts} />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
+    );
+  };
+
+  return (
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/*" element={<MainApp />} />
+        </Routes>
+      </AuthProvider>
     </Router>
   );
 }

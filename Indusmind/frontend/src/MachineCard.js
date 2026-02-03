@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 // Machine Card Component for displaying individual machine status
 const MachineCard = ({ machine }) => {
     const navigate = useNavigate();
+    const { hasPermission } = useAuth();
 
     // Use healthScore from machine state (updated every 45s)
     const healthScore = machine.healthScore || 100;
@@ -66,11 +68,21 @@ const MachineCard = ({ machine }) => {
 
     const insights = getAIInsights();
 
+    // Check if user can view detailed information
+    const canViewDetails = hasPermission('view_machine_details');
+    const canViewHealth = hasPermission('view_health');
+
+    const handleCardClick = () => {
+        if (canViewDetails) {
+            navigate(`/machine/${machine.id}`);
+        }
+    };
+
     return (
         <div
             className={`machine-card ${getStatusClass(machine.status)}`}
-            onClick={() => navigate(`/machine/${machine.id}`)}
-            style={{ cursor: 'pointer' }}
+            onClick={handleCardClick}
+            style={{ cursor: canViewDetails ? 'pointer' : 'default' }}
         >
             <div className="card-header">
                 <div className="title-section">
@@ -84,16 +96,18 @@ const MachineCard = ({ machine }) => {
                     </span>
                 </div>
 
-                {/* Health Score Ring */}
-                <div className="health-ring-container">
-                    <div className="health-ring" style={{
-                        background: `conic-gradient(${healthColor} ${healthScore * 3.6}deg, #ecf0f1 0deg)`
-                    }}>
-                        <div className="health-ring-inner">
-                            <span style={{ color: healthColor }}>{healthScore}%</span>
+                {/* Health Score Ring - Only show to Engineers and Managers */}
+                {canViewHealth && (
+                    <div className="health-ring-container">
+                        <div className="health-ring" style={{
+                            background: `conic-gradient(${healthColor} ${healthScore * 3.6}deg, #ecf0f1 0deg)`
+                        }}>
+                            <div className="health-ring-inner">
+                                <span style={{ color: healthColor }}>{healthScore}%</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
             </div>
 
             <div className="card-body">
@@ -110,7 +124,8 @@ const MachineCard = ({ machine }) => {
                     <span className="data-val">{machine.power_usage} kWh</span>
                 </div>
 
-                {insights && (
+                {/* AI Insights - Only for Engineers and Managers */}
+                {insights && canViewHealth && (
                     <div className="ai-insights">
                         {machine.status === 'NORMAL' ? (
                             <div className="safe-insights">
@@ -143,6 +158,18 @@ const MachineCard = ({ machine }) => {
                                     ))}
                                 </div>
                             </div>
+                        )}
+                    </div>
+                )}
+
+                {/* Message for Operators - Limited View */}
+                {!canViewHealth && (
+                    <div className="operator-message">
+                        <div className="limited-access-badge">
+                            👁️ Basic Status View
+                        </div>
+                        {canViewDetails && (
+                            <p className="upgrade-hint">Click card for more details</p>
                         )}
                     </div>
                 )}
