@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import API_BASE_URL from "./config";
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 // Import Components
 import MachineCard from "./MachineCard";
@@ -143,7 +144,7 @@ function App() {
 
     try {
       // 10 Second Timeout - Rule based is fast, but better safe
-      const response = await axios.post("http://localhost:5000/api/predict", dataParams, { timeout: 10000 });
+      const response = await axios.post(`${API_BASE_URL}/api/predict`, dataParams, { timeout: 10000 });
 
       if (response.data.prediction) {
         updateMachineStatus(id, response.data.prediction, dataParams); // Pass dataParams to history
