@@ -4,7 +4,7 @@ const cors = require("cors");
 const { exec } = require("child_process");
 
 require("./db"); // DB connection
-const MachineData = require("./models/machinedata");
+const MachineData = require("./models/Machinedata");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
